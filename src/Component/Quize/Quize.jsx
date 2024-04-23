@@ -13,8 +13,8 @@ const Quize = () => {
     </div>
     <div className="lower-section">
       <div className="question-section">
-          {/* <QuestioOption/> */}
-          <SimpleQuestion/>
+          <QuestioOption/>
+          {/* <SimpleQuestion/> */}
       </div>
 
       <div className="question-bord">
