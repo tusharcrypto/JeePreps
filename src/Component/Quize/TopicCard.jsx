@@ -1,9 +1,8 @@
 import React from 'react'
-import './subjectcard.css'
+import './topicCard.css'
 import { useAuth } from '../Utility/AuthContexProvider'
 import {  useNavigate } from 'react-router-dom'
-import SimpleQuestion from '../Quize/SimpleQuestion'
-const SubjectCard = (props) => {
+const TopicCard = (props) => {
  const{isLoggedIn}= useAuth()
  const navigate = useNavigate();
  const handlebtn =(e)=>{
@@ -20,10 +19,10 @@ const SubjectCard = (props) => {
   return (
     <div className="sub-card">
       <img src={props.image}></img>
-      <h4>{props.title}</h4>
+      <h4  id='top'>{props.title}</h4>
       <button onClick={handlebtn}>Solve Now</button>
     </div>
   )
 }
 
-export default SubjectCard
+export default TopicCard

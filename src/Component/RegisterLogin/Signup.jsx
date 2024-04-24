@@ -1,12 +1,13 @@
 
 import React, { useState } from 'react'
 import './signup.css'
-import { Link, Navigate, Route, Routes  } from 'react-router-dom'
+import { Link, Navigate, Route, Routes, useNavigate  } from 'react-router-dom'
 import axios from 'axios';
 export default function Signup() {
   const userdetail ={username:"",email:"",password:"",role:""};
   let [userdata,setuserdata] = useState(userdetail);
   // handle use input
+  const Navigate = useNavigate();
   const handleuserdata =(e)=>{
     if(e.target.name==="username") {setuserdata({...userdata,[e.target.name]:e.target.value})}
     else if(e.target.name==="email"){setuserdata({...userdata,[e.target.name]:e.target.value})}
@@ -21,10 +22,11 @@ export default function Signup() {
       if(res.data!==""){
         console.log(res.data);
         window.location.href = '/';
-      }
+        // Navigate('/')
+            }
     })
   }
-  http://localhost:5000/signup
+  // http://localhost:5000/signup
   return (
     <div className="login-sinup">
       <div className="loginsignup-container">
