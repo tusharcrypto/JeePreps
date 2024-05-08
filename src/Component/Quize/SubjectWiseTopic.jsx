@@ -16,7 +16,7 @@ const SubjectWiseTopic = (props) => {
 
       <div className="subject-class">
         <div className="class-11">
-          <p className='w-100 mt-8 bg-purple-300 rounded' >Chapters Of :{subject}</p>
+          <p className='w-100 mt-8 bg-purple-300 rounded py-2 text-black ml-4  pl-5 ' >Chapters Of :{subject}</p>
           {topic[subject].chapters.map((item, i) => (
         <TopicCard key={i} title={item.name} image={image} />
       ))}

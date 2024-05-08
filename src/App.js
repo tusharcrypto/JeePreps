@@ -10,6 +10,7 @@ import Login from './Component/RegisterLogin/Login';
 import PrivateRoutes from './Component/Utility/PrivateRoutes';
 import { AuthProvider } from './Component/Utility/AuthContexProvider';
 import Footer from './Component/Footer/Footer';
+import Submit from './Component/Quize/Submit';
 function App() {
   return (
     <>
@@ -17,16 +18,20 @@ function App() {
     <Navbar/>
     <Routes>
       <Route path='/' element={<Home/>}></Route>
+
       <Route element={<PrivateRoutes/>}>
+
       <Route path='/practice' element={<Practice/>}></Route>
       <Route path='/about-us' element={<About/>}></Route>
+
       </Route>
+      <Route path='/submit' element={<Submit/>} ></Route>
       <Route path='/signup/*' element={<Signup/>}/>
       <Route path='/login' element={<Login/>}/>
       {/* <Route path='/profile' element={<Login/>}/> */}
     </Routes>
     </BrowserRouter>
-    {/* <Foote  r/> */}
+    <Footer/>
     </>
   );
 }

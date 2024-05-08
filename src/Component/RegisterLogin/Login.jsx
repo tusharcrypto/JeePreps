@@ -30,7 +30,7 @@ export default function Login() {
           if (decodedToken.role === "student") {
             navigate("/");
           } else if (decodedToken.role === "admin") {
-            navigate("/practice");
+            navigate("/");
           }
         }
       }

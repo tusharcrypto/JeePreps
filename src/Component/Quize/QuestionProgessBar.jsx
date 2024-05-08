@@ -1,17 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuestion } from '../Utility/QuestionContextProvider'
 
 const QuestionProgessBar = () => {
   const questionumber =[1,2,3,4,5,6,7,8,9,10]
+  const[bgcolor,setbgcolor]=useState({})
   const{
     issaveAndNext,
     issaveAndMark,
     ismarkReviewAndNext,
     issubmit,
+    questionindex,setquestonindex
    } = useQuestion();
   const [selectedquestion,setsetselectedquestion] = useState(null)
+
+
+  useEffect(()=>{
+   if(issaveAndNext){
+     setbgcolor((prevouscolor)=>({
+      ...prevouscolor,
+      [questionindex]:'green-300',
+    }))
+   }
+  
+  },[issaveAndNext])
+  useEffect(()=>{
+    if(issaveAndMark){
+      setbgcolor((prevouscolor)=>({
+        ...prevouscolor,
+        [questionindex]:'purple-300'
+      }))
+    }
+  },[issaveAndMark])
+
  const handleselectedquestion=(questionno)=>{
       setsetselectedquestion(questionno)
+      setquestonindex(questionno-1)
+      setbgcolor((prevouscolor)=>({
+        ...prevouscolor,
+        [questionno]:'red-300',
+      }))
+     
  }
    return (
     <div  className=' ml-16 my-2'>
@@ -44,8 +72,8 @@ const QuestionProgessBar = () => {
 
             return <button
             key={index}
-            className={' border border-gray-200 px-3 py-2 rounded mr-2 bg-slate-400 text-black mb-2'}
-            onClick={() => handleselectedquestion(index + 1)}
+            className={` border border-gray-200 px-3 py-2 rounded mr-2 bg-${bgcolor[e]} text-black mb-2`}
+            onClick={() => handleselectedquestion(index + 1,e)}
           >
            {index + 1}
           </button>

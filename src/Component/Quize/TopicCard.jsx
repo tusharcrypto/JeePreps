@@ -1,28 +1,31 @@
-import React from 'react'
-import './topicCard.css'
-import { useAuth } from '../Utility/AuthContexProvider'
-import {  useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import './topicCard.css';
+import { useAuth } from '../Utility/AuthContexProvider';
+import SimpleQuestion from './SimpleQuestion'; // Import the SimpleQuestion component
+
 const TopicCard = (props) => {
- const{isLoggedIn}= useAuth()
- const navigate = useNavigate();
- const handlebtn =(e)=>{
-  e.preventDefault()
-  console.log(isLoggedIn)
-    //  isLoggedIn ? <SimpleQuestion/> : navigate('/login')
-    if (isLoggedIn) {
-      navigate('/practice',{state : {subject : props.title}})
-      // console.log(props.title)
-    } else {
-      navigate('/login');
-    }
- }
+  const { isLoggedIn } = useAuth();
+    const[look,setlook] = useState();
+  const handlebt = (e) => {
+    e.preventDefault();
+    // console.log("clicked")
+    setlook(true)
+    // if (isLoggedIn) {
+    //   console.log("clicked")
+    //   return <SimpleQuestion />;
+    // } else {
+  
+    //   console.log('User is not logged in');
+    // }
+  };
+
   return (
     <div className="sub-card">
-      <img src={props.image}></img>
-      <h4  id='top'>{props.title}</h4>
-      <button onClick={handlebtn}>Solve Now</button>
+      <img src={props.image} alt="topic" />
+      <h4 id="top">{props.title}</h4>
+      <button onClick={handlebt}>Solve Now</button>
     </div>
-  )
-}
+  );
+};
 
-export default TopicCard
+export default TopicCard;

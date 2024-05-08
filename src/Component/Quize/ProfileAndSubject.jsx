@@ -1,8 +1,31 @@
-import React from 'react'
+import React, { useState ,useEffect } from 'react'
 import logo from '../Assets/logo2.png'
 import profile from '../Assets/diversity.png'
+import { useNavigate } from 'react-router-dom'
 const ProfileAndSubject = () => {
+  const [second,setsecond] = useState(20)
+  const[minute,setminute] = useState(0);
+  const navigate = useNavigate();
+ 
   
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (second === 0) {
+        if (minute === 0) {
+          clearInterval(timer);
+          navigate('/submit');
+        } else {
+          setminute(prevminute => prevminute - 1);
+          setsecond(0);
+        }
+      } else {
+        setsecond(prevsecond => prevsecond - 1);
+      }
+    }, 1000);
+
+    // Clear interval when component unmounts
+    return () => clearInterval(timer);
+  }, [second, minute]);
   const student_name="Tushar"
   return (
     <div>
@@ -14,7 +37,7 @@ const ProfileAndSubject = () => {
           <ul>
             <li>Candidate Name:{student_name}</li>
             <li>Subject Name:{student_name}</li>
-            <li>Remaining Time:{student_name}</li>
+            <li>Remaining Time : {minute<10?"0"+minute:minute} : {second<10?"0"+second:second}</li>
           </ul>
         </div>
       </div>

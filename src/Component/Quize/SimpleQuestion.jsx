@@ -4,6 +4,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 const SimpleQuestion = () => {
+  console.log("commed here")
   const [questions,setquestion] = useState([])
   const [selectedOptions, setSelectedOptions] = useState({});
   const [viewsolution,setviewsolution] = useState({})

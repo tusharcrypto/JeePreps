@@ -14,10 +14,11 @@ const Practice = () => {
   return (
   
     <div>
-    {/* <QuestionProvider>
+    
     <Quize/>
-    </QuestionProvider> */}
-    <SubjectWiseTopic subject={subject} ></SubjectWiseTopic>
+   
+
+    {/* <SubjectWiseTopic subject={subject} ></SubjectWiseTopic> */}
     {/* <SimpleQuestion/> */}
       
     </div>
