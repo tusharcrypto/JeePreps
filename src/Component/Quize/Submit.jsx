@@ -60,9 +60,9 @@ const Submit = () => {
           </Bar>
 
          </div>
-        {/* <ShowResult/>  */}
+        <ShowResult/> 
 
-        <AdminDashBoard/> 
+        {/* <AdminDashBoard/>  */}
     
     </div>
   )

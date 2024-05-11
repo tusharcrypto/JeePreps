@@ -2,36 +2,37 @@ import React, { useEffect } from 'react';
 // import questions from '../Assets/Quesstion.js';
 import { useState } from 'react';
 import axios from 'axios';
+import { useQuestion } from '../Utility/QuestionContextProvider';
+import QuotesCard from '../Notes/QuotesCard';
+import SubjectTopicList from '../Subjects/SubjectTopicList';
+import SubjectTopicWiseInfo from '../Subjects/SubjectTopicWiseInfo'
 
 const SimpleQuestion = () => {
-  console.log("commed here")
-  const [questions,setquestion] = useState([])
+  // console.log("commed here")
+  const [question,setquestion] = useState([])
   const [selectedOptions, setSelectedOptions] = useState({});
   const [viewsolution,setviewsolution] = useState({})
+  const {selectedtopic,setselectedtopic} = useQuestion()
+
   useEffect(()=>{
-        axios.get('http://localhost:5000/question').then((response)=>{
-          console.log(response)
-          setquestion(response.data)
-          const backendData = response.data
-          const transformedData = backendData.flatMap(quiz => (
-            quiz.questions.map(question => ({
-              id: question.questionId,
-              question: question.questionInWords,
-              options: [
-                question.option1,
-                question.option2,
-                question.option3,
-                question.option4
-              ],
-              answer: question[`option${question.ans}`],
-              explanation: question.explanation
-            }))
-          ));
-          setquestion(transformedData)
-        })
-        
+    try {
+      axios.get('http://localhost:5000/question').then((response)=>{setquestion(response.data.chapters)
+      console.log(response.data.chapters)
+    }).catch((e)=>{
+        // alert('somenthing wenet wrong')
+        console.log(e)
+      })
+      
+    } catch (error) {
+      console.log("Data not recieved"+error);
+    }
+
+   
   },[])
 
+  const chapter = question.find(chapter => chapter.name===`${selectedtopic}`)
+    // console.log(chapter)
+    // console.log(typeof(chapter))
   const handleOptionChange = (questionId, option, answer) => {
     setSelectedOptions((prevSelectedOptions) => ({
       ...prevSelectedOptions,
@@ -44,12 +45,23 @@ const SimpleQuestion = () => {
   }
 
   return (
-    <div>
-      {questions.map((question, index) => (
-        <div key={index} className="question-option">
+    <div className=' w-auto mt-7 mr-32 flex flex-row'>
+      <div className="topic-list mr-4 h-screen">
+      <QuotesCard/>
+      <SubjectTopicList></SubjectTopicList>
+      </div>
+      <div className="quote-question-section ">
+       <div className="quote-topic-info flex flex-row ">
+       
+        <SubjectTopicWiseInfo></SubjectTopicWiseInfo>
+        
+       </div>
+       
+      {chapter && chapter.questions.map((question, index) => (
+        <div key={index} className="question-option pl-20 pt-4">
           <div className='question  '>
             <p className=' mr-2'>Question {index + 1}</p>
-            {/* <hr/> */}
+          
             <p>{question.question}</p>
           </div>
           <div className="options">
@@ -57,28 +69,31 @@ const SimpleQuestion = () => {
               <div key={optionIndex} className={`option-${optionIndex + 1}`}>
                 <input
                   type="radio"
-                  name={`question-${question.id}`} // Unique name for each question
+                  name={`question-${question.question_id}`} 
                   value={option}
-                  id={`${option}-${question.id}`}
-                  // checked={selectedOptions[question.id] === option}
-                  onChange={() => handleOptionChange(question.id, option, question.answer)}
+                  id={`${option}-${question.question_id}`}
+                  
+                  onChange={() => handleOptionChange(question.question_id, option, question.correct_answer)}
                 />
                 <label
-                  className={` ml-4 my-1 w-80 pl-4 bg-${selectedOptions[question.id] === option ? (option === question.answer ? 'green-300' : 'red-300') : ''} `}
-                  htmlFor={`${option}-${question.id}`}
+                  className={` ml-4 my-1 px-4 py-2 w-auto pl-4 bg-${selectedOptions[question.question_id] === option ? (option === question.correct_answer ? 'green-300' : 'red-300') : ''} `}
+                  htmlFor={`${option}-${question.question_id}`}
                 >
                   {option}
                 </label>
               </div>
             ))}
           </div>
-          <p className='my-2 bg-yellow-100 w-28 px-1.5 py-2 ' onClick={()=>{handlesolution(question.id,!viewsolution[question.id])}}  >View Solution</p>
-           {!viewsolution[question.id]?'':`${question.explanation}`}    
+          <p className='my-2 bg-yellow-100 w-32 px-1.8 py-3 pl-2.5 cursor-pointer rounded-md ' onClick={()=>{handlesolution(question.question_id,!viewsolution[question.question_id])}}  >View Solution</p>
+           {!viewsolution[question.question_id]?'':`${question.explanation}`}    
           <hr></hr>
         </div>
         
       ))}
-    {console.log(selectedOptions)}
+      </div>
+    
+    {/* {console.log(selectedOptions)}   */}
+   
     </div>
   );
 };

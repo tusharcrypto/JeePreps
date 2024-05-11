@@ -5,9 +5,14 @@ const QuestionContext = createContext(); //
   const [questionSelectionOPtion,setquestionSelectedpotion] = useState({})
   const [issaveAndNext, setisSaveAndNext] = useState({});
   const [issaveAndMark, setisSaveAndMark] = useState({});
+  const[subjectselected,setsubjectselected] = useState(false)
   const [ismarkReviewAndNext, setisMarkReviewAndNext] = useState(false);
   const [issubmit, setisSubmit] = useState(false);
   const[questionindex,setquestonindex] = useState(0)
+  const[selectedtopic,setselectedtopic] = useState();
+  const[classname,setclass] = useState();
+  const[subjectname,setsubjectname] = useState();
+
   const value = {
     issaveAndNext,
     setisSaveAndNext,
@@ -20,7 +25,12 @@ const QuestionContext = createContext(); //
     questionSelectionOPtion,
     setquestionSelectedpotion,
     questionindex,
-    setquestonindex
+    setquestonindex,
+    subjectselected,
+    setsubjectselected,
+    selectedtopic,setselectedtopic,
+    subjectname,setsubjectname,
+    classname,setclass
   };
   // useEffect(()=>{console.log(questionSelectionOPtion)},[questionSelectionOPtion])
   return <QuestionContext.Provider value={value}>{props.children}</QuestionContext.Provider>; // Corrected usage of QuestionContext

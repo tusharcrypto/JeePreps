@@ -2,21 +2,20 @@ import React, { useState } from 'react';
 import './topicCard.css';
 import { useAuth } from '../Utility/AuthContexProvider';
 import SimpleQuestion from './SimpleQuestion'; // Import the SimpleQuestion component
+import { useNavigate } from 'react-router-dom';
+import { useQuestion } from '../Utility/QuestionContextProvider';
 
 const TopicCard = (props) => {
   const { isLoggedIn } = useAuth();
     const[look,setlook] = useState();
+    const {setselectedtopic}= useQuestion()
+    const navigate = useNavigate();
   const handlebt = (e) => {
     e.preventDefault();
     // console.log("clicked")
+    navigate('/chapterwise-question')
     setlook(true)
-    // if (isLoggedIn) {
-    //   console.log("clicked")
-    //   return <SimpleQuestion />;
-    // } else {
-  
-    //   console.log('User is not logged in');
-    // }
+    setselectedtopic(props.title);
   };
 
   return (

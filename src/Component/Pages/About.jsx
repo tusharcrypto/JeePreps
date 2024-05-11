@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Utility/AuthContexProvider';
 
 const AboutUs = () => {
 const navigate = useNavigate();
@@ -7,6 +8,19 @@ const navigate = useNavigate();
   e.preventDefault();
     navigate('/');
   }
+
+  const{setIsLoggedIn}= useAuth();
+  useEffect(()=>{
+    const logininfo = JSON.parse(localStorage.getItem('userinfo'))
+    if(logininfo){
+      setIsLoggedIn(logininfo.isLoggedIn);
+    }else{
+      setIsLoggedIn(false);
+    }
+   
+  },[])
+
+
   return (
    <div className="about-us">
 

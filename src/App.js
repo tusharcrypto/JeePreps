@@ -11,6 +11,9 @@ import PrivateRoutes from './Component/Utility/PrivateRoutes';
 import { AuthProvider } from './Component/Utility/AuthContexProvider';
 import Footer from './Component/Footer/Footer';
 import Submit from './Component/Quize/Submit';
+import SimpleQuestion from './Component/Quize/SimpleQuestion';
+import AdminDashBoard from './Component/Admin/AdminDashBoard';
+import Profile from './Component/RegisterLogin/Profile';
 function App() {
   return (
     <>
@@ -28,10 +31,12 @@ function App() {
       <Route path='/submit' element={<Submit/>} ></Route>
       <Route path='/signup/*' element={<Signup/>}/>
       <Route path='/login' element={<Login/>}/>
-      {/* <Route path='/profile' element={<Login/>}/> */}
+      <Route path='/chapterwise-question' element={<SimpleQuestion/>}/>
+      <Route path='/admin' element={<AdminDashBoard/>}/>
+      <Route path='/profile' element={<Profile/>}/>
     </Routes>
     </BrowserRouter>
-    <Footer/>
+    {/* <Footer/> */}
     </>
   );
 }

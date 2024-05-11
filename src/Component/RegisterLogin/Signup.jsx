@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
 import './signup.css'
-import { Link, Navigate, Route, Routes, useNavigate  } from 'react-router-dom'
+import { Link, Navigate, Route, Routes, json, useNavigate  } from 'react-router-dom'
 import axios from 'axios';
 export default function Signup() {
   const userdetail ={username:"",email:"",password:"",role:""};
@@ -21,6 +21,7 @@ export default function Signup() {
     axios.post('http://localhost:5000/signup',userdata).then((res)=>{
       if(res.data!==""){
         console.log(res.data);
+        localStorage.setItem('userinfo',JSON.stringify({username:userdata.username,useremail:userdata.email,usepassword:userdata.password,userrole:userdata.role }))
         window.location.href = '/';
         // Navigate('/')
             }
