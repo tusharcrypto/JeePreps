@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import topic from '../Assets/EleventhTopicList.js';
 import TopicCard from './TopicCard.jsx';
 import image from '../Assets/phy11.png';
 import './subjectwiseTopic.css'
+import { useAuth } from '../Utility/AuthContexProvider.jsx';
 const SubjectWiseTopic = (props) => {
   const { subject } = props;
 
   // Check if the subject is valid and the topic object contains the expected structure
+  const{setIsLoggedIn}= useAuth();
+  useEffect(()=>{
+    const logininfo = JSON.parse(localStorage.getItem('userinfo'))
+    if(logininfo){
+      setIsLoggedIn(logininfo.isLoggedIn);
+    }else{
+      setIsLoggedIn(false);
+    }
+   
+  },[])
   if (!subject || !topic[subject] || !topic[subject].chapters) {
     return <p>No chapters found for the selected subject</p>;
   }
