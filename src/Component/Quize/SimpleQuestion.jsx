@@ -9,15 +9,16 @@ import SubjectTopicWiseInfo from '../Subjects/SubjectTopicWiseInfo'
 
 const SimpleQuestion = () => {
   // console.log("commed here")
-  const [question,setquestion] = useState([])
+  const [question,setquestion] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({});
-  const [viewsolution,setviewsolution] = useState({})
-  const {selectedtopic,setselectedtopic} = useQuestion()
+  const [viewsolution,setviewsolution] = useState({});
+  const {selectedtopic,setselectedtopic, subjectname,classname} = useQuestion()
 
   useEffect(()=>{
+    // const chapter= response.data.find(name=>name.name === "Sets");
     try {
-      axios.get('http://localhost:5000/question').then((response)=>{setquestion(response.data.chapters)
-      console.log(response.data.chapters)
+      axios.get(`https://localhost:7215/api/Quiz/GetQuestion?subject=${subjectname}&std=1`).then((response)=>{setquestion(response.data)
+      console.log(response.data)
     }).catch((e)=>{
         // alert('somenthing wenet wrong')
         console.log(e)
@@ -29,9 +30,9 @@ const SimpleQuestion = () => {
 
    
   },[])
-
-  const chapter = question.find(chapter => chapter.name===`${selectedtopic}`)
-    // console.log(chapter)
+ console.log(selectedtopic);
+  const chapter = question.find(chapter => chapter.name=== `${selectedtopic}`)
+     console.log(chapter)
     // console.log(typeof(chapter))
   const handleOptionChange = (questionId, option, answer) => {
     setSelectedOptions((prevSelectedOptions) => ({
@@ -53,7 +54,7 @@ const SimpleQuestion = () => {
       <div className="quote-question-section ">
        <div className="quote-topic-info flex flex-row ">
        
-        <SubjectTopicWiseInfo></SubjectTopicWiseInfo>
+        {/* <SubjectTopicWiseInfo></SubjectTopicWiseInfo> */}
         
        </div>
        
@@ -72,7 +73,7 @@ const SimpleQuestion = () => {
                   name={`question-${question.question_id}`} 
                   value={option}
                   id={`${option}-${question.question_id}`}
-                  
+                  checked={selectedOptions[question.question_id]===option}
                   onChange={() => handleOptionChange(question.question_id, option, question.correct_answer)}
                 />
                 <label

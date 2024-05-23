@@ -1,12 +1,165 @@
+// import React, { useEffect, useState } from "react";
+// import { useQuestion } from "../Utility/QuestionContextProvider";
+// import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+
+// const QuestioOption = () => {
+//   const [question, setQuestion] = useState([]);
+//   const [selectedOptions, setSelectedOptions] = useState({});
+//   const navigate = useNavigate();
+//   const [totalquestn, setTotalQuestn] = useState([]);
+//   const {
+//     issaveAndNext,
+//     setisSaveAndNext,
+//     issaveAndMark,
+//     setisSaveAndMark,
+//     ismarkReviewAndNext,
+//     setisMarkReviewAndNext,
+//     issubmit,
+//     setisSubmit,
+//     questionSelectionOPtion,
+//     setquestionSelectedpotion,
+//     questionindex,
+//     setquestonindex,
+//     subjectname = 'Physics',
+//     setsubjectname
+//   } = useQuestion();
+
+//   useEffect(() => {
+//     axios.get('https://localhost:7215/api/Quiz/GetAllQuestion')
+//       .then((response) => {
+//         setQuestion(response.data);
+//         setTotalQuestn([...response.data[0]?.questions, ...response.data[1]?.questions, ...response.data[2]?.questions]);
+
+       
+//         console.log(response.data);
+//       })
+//       .catch(error => {
+//         console.log(error);
+//       });
+//   }, []);
+
+//   const subquestion = question.find(subject => subject.subject === subjectname);
+//   console.log(totalquestn)
+//   let currentQuestion = null;
+//   if (subjectname === 'Physics') {
+//     currentQuestion = question.length > 0 ? question[0]?.questions[questionindex] : null;
+//   } else if (subjectname === 'Mathematics') {
+//     currentQuestion = question.length > 1 ? question[1]?.questions[questionindex] : null;
+//   } else {
+//     currentQuestion = subquestion?.questions[questionindex] || null;
+//   }
+
+//   const handleOptionChange = (questionId, option) => {
+//     setSelectedOptions((prevSelectedOptions) => ({
+//       ...prevSelectedOptions,
+//       [questionId]: option,
+//     }));
+//     setquestionSelectedpotion((prevoption) => ({ ...prevoption, [questionId]: option }));
+//   };
+
+//   function handlesaveandnext() {
+//     setisSaveAndNext((prevsave) => ({
+//       ...prevsave,
+//       [questionindex]: true
+//     }));
+//     setquestonindex(questionindex + 1);
+//   }
+
+//   useEffect(() => {
+//     Object.entries(questionSelectionOPtion).forEach(([questionId, selectedOption]) => {
+//       // Log the selected options
+//     });
+//   }, [questionSelectionOPtion]);
+
+//   if (!subquestion || !currentQuestion) {
+//     return <div>Loading...</div>;
+//   }
+
+//   return (
+//     <div className="">
+//       <div className="question-withoption">
+//         <p>{currentQuestion.question}</p>
+//         <hr></hr>
+//         {currentQuestion.options.map((option, optionIndex) => (
+//           <div key={optionIndex} className="py-2">
+//             <input
+//               type="radio"
+//               name={`question-${currentQuestion.question_id}`}
+//               value={option}
+//               id={`${option}-${currentQuestion.question_id}`}
+//               checked={selectedOptions[currentQuestion.question_id] === option}
+//               onChange={() => handleOptionChange(currentQuestion.question_id, option)}
+//             />
+//             <label
+//               className='ml-4'
+//               htmlFor={`${option}-${currentQuestion.question_id}`}
+//             >
+//               {option}
+//             </label>
+//           </div>
+//         ))}
+//       </div>
+
+//       <div className="btn-section w-90">
+//         <button
+//           className="bg-green-300 rounded px-3 py-2 text-xl text-black font-sans font-serif my-2 mx-3 mr-3"
+//           onClick={handlesaveandnext}
+//         >
+//           Save & Next
+//         </button>
+//         <button
+//           className="bg-orange-300 rounded px-3 py-2 text-xl text-black font-sans font-serif my-2 mx-3 mr-3"
+//           onClick={() => {
+//             setisSaveAndMark((prevmark) => ({
+//               ...prevmark,
+//               [questionindex]: true
+//             }));
+//             setquestonindex(questionindex + 1);
+//             console.log(selectedOptions);
+//           }}
+//         >
+//           Save & Mark Review
+//         </button>
+//         <button
+//           className="bg-red-300 rounded px-3 py-2 text-xl text-black font-sans font-serif my-2 mx-3 mr-3"
+//           onClick={() => setSelectedOptions({})}
+//         >
+//           Clear Response
+//         </button>
+//         <button
+//           className="bg-blue-300 rounded px-3 py-2 text-xl text-black font-sans font-serif my-2 mx-3 mr-3"
+//           onClick={() => setisMarkReviewAndNext(true)}
+//         >
+//           Mark Review & Next
+//         </button>
+//         <hr />
+//         <button
+//           className="bg-red-600 rounded px-3 py-2 text-xl text-white font-sans font-serif my-2 mx-3 mr-3 absolute"
+//           onClick={() => {
+//             setisSubmit(true);
+//             navigate('/submit');
+//           }}
+//         >
+//           Submit
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default QuestioOption;
+
 import React, { useEffect, useState } from "react";
 import { useQuestion } from "../Utility/QuestionContextProvider";
-import questions from "../Assets/Quesstion";
-import Submit from "./Submit";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const QuestioOption = () => {
+  const [question, setQuestion] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState({});
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [totalquestn, setTotalQuestn] = useState([]);
   const {
     issaveAndNext,
     setisSaveAndNext,
@@ -19,98 +172,75 @@ const QuestioOption = () => {
     questionSelectionOPtion,
     setquestionSelectedpotion,
     questionindex,
-    setquestonindex
+    setquestonindex,
+    subjectname = 'Physics',
+    setsubjectname
   } = useQuestion();
-    
-  // console.log(selectedOptions[0])
-  const handleOptionChange = (questionId, option,answer,e,optionIndex) => {
-  
+
+  useEffect(() => {
+    axios.get('https://localhost:7215/api/Quiz/GetAllQuestion')
+      .then((response) => {
+        setQuestion(response.data);
+        setTotalQuestn([...response.data[0]?.questions, ...response.data[1]?.questions, ...response.data[2]?.questions]);
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  let currentQuestion = totalquestn[questionindex];
+
+  const handleOptionChange = (questionId, option) => {
     setSelectedOptions((prevSelectedOptions) => ({
       ...prevSelectedOptions,
       [questionId]: option,
     }));
-    setquestionSelectedpotion((prevoption)=>({...prevoption,[questionId]:option}))
-
-    
+    setquestionSelectedpotion((prevoption) => ({ ...prevoption, [questionId]: option }));
   };
-  
- function handlesaveandnext(questionId,option){
-  setisSaveAndNext((prevsave)=>({
-    ...prevsave,
-    [questionindex]:true
-  }))
-  // setquestionSelectedpotion((prevoption)=>({...prevoption,[questionId]:option}))
-  setquestonindex(questionindex+1)
-  // setSelectedOptions((prevSelectedOptions) => ({
-  //   ...prevSelectedOptions,
-  //   [questionId]: option,
-  // }));
 
+  function handlesaveandnext() {
+    setisSaveAndNext((prevsave) => ({
+      ...prevsave,
+      [questionindex]: true
+    }));
+    setquestonindex(questionindex + 1);
   }
 
   useEffect(() => {
-    // Log the key-value pairs of selectedOptions
     Object.entries(questionSelectionOPtion).forEach(([questionId, selectedOption]) => {
-      // console.log(`Question ID: ${questionId}, Selected Option: ${selectedOption}`);
+      // Log the selected options
     });
   }, [questionSelectionOPtion]);
 
-
-
-
-
-  // useEffect(() => {
-  //   if (questionSelectionOPtion.questionNo && questionSelectionOPtion.option) {
-  //     setSelectedOptions((prevSelectedOptions) => ({
-  //       ...prevSelectedOptions,
-  //       [questionSelectionOPtion.questionNo]: questionSelectionOPtion.option,
-  //     }));
-  //   }
-  // }, [questionSelectionOPtion]);
-  
+  if (!currentQuestion) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="">
       <div className="question-withoption">
-        <p>{questions[questionindex].question}</p>
+        <p>{currentQuestion.question}</p>
         <hr></hr>
-        {questions[questionindex].options.map((option, optionIndex) => (
-              <div key={optionIndex} className={`py-2`}>
-                <input
-                  type="radio"
-                  name={`question-${questions[questionindex].id}`} // Unique name for each question
-                  value={option}
-                  id={`${option}-${questions[questionindex].id}`}
-                  checked={selectedOptions[questions[questionindex].id] === option}
-                  onChange={(e) => handleOptionChange(questions[questionindex].id, option,questions[questionindex].answer,e,optionIndex)}
-                
-                />
-                {/* {console.log(question.id)} */}
-                <label className={` ml-2 bg-${selectedOptions[questions[questionindex].id]=== option ?(option === questions[questionindex].answer) ? 'bg-green-300':'bg-red-300': '' }`} htmlFor={`${option}-${questions[questionindex].id}`}>{option}</label>
-              </div>
-            ))} 
+        {currentQuestion.options.map((option, optionIndex) => (
+          <div key={optionIndex} className="py-2">
+            <input
+              type="radio"
+              name={`question-${currentQuestion.question_id}`}
+              value={option}
+              id={`${option}-${currentQuestion.question_id}`}
+              checked={selectedOptions[currentQuestion.question_id] === option}
+              onChange={() => handleOptionChange(currentQuestion.question_id, option)}
+            />
+            <label
+              className='ml-4'
+              htmlFor={`${option}-${currentQuestion.question_id}`}
+            >
+              {option}
+            </label>
+          </div>
+        ))}
       </div>
-
-      {/* <div className="question-withoption">
-        <p>{questions[2].question}</p>
-        <hr></hr>
-        {questions[2].options.map((option, optionIndex) => (
-              <div key={optionIndex} className={`py-2`}>
-                <input
-                  type="radio"
-                  name={`question-${questions[2].id}`} 
-                  value={option}
-                  id={`${option}-${questions[2].id}`}
-                  checked={selectedOptions[questions[2].id] === option}
-                  onChange={(e) => handleOptionChange(questions[2].id, option,questions[2].answer,e,optionIndex)}
-                
-                />
-               
-                <label className={`  bg-${selectedOptions[questions[2].id]=== option ?(option === questions[2].answer) ? 'bg-green-300':'bg-red-300': '' }`} htmlFor={`${option}-${questions[2].id}`}>{option}</label>
-              </div>
-            ))} 
-      </div> */}
-      
 
       <div className="btn-section w-90">
         <button
@@ -122,19 +252,19 @@ const QuestioOption = () => {
         <button
           className="bg-orange-300 rounded px-3 py-2 text-xl text-black font-sans font-serif my-2 mx-3 mr-3"
           onClick={() => {
-            setisSaveAndMark((prevmark)=>({
+            setisSaveAndMark((prevmark) => ({
               ...prevmark,
-              [questionindex]:true
+              [questionindex]: true
             }));
-            setquestonindex(questionindex+1)
-            console.log(selectedOptions)
+            setquestonindex(questionindex + 1);
+            console.log(selectedOptions);
           }}
         >
           Save & Mark Review
         </button>
         <button
           className="bg-red-300 rounded px-3 py-2 text-xl text-black font-sans font-serif my-2 mx-3 mr-3"
-          onClick={(e) => setSelectedOptions({})}
+          onClick={() => setSelectedOptions({})}
         >
           Clear Response
         </button>
@@ -147,10 +277,11 @@ const QuestioOption = () => {
         <hr />
         <button
           className="bg-red-600 rounded px-3 py-2 text-xl text-white font-sans font-serif my-2 mx-3 mr-3 absolute"
-          onClick={()=>{
-            setisSubmit(true)
-            navigate('/submit')
-            
+          onClick={() => {
+            setisSubmit(true);
+            setquestonindex(0)
+            console.log(questionSelectionOPtion)
+            navigate('/submit');
           }}
         >
           Submit

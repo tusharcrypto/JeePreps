@@ -11,7 +11,7 @@ const QuestionContext = createContext(); //
   const[questionindex,setquestonindex] = useState(0)
   const[selectedtopic,setselectedtopic] = useState();
   const[classname,setclass] = useState();
-  const[subjectname,setsubjectname] = useState();
+  const[subjectname,setsubjectname] = useState('Physics');
 
   const value = {
     issaveAndNext,

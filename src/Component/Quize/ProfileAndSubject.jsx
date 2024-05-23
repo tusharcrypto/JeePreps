@@ -2,11 +2,13 @@ import React, { useState ,useEffect } from 'react'
 import logo from '../Assets/logo2.png'
 import profile from '../Assets/diversity.png'
 import { useNavigate } from 'react-router-dom'
+import { useQuestion } from '../Utility/QuestionContextProvider'
 const ProfileAndSubject = () => {
-  const [second,setsecond] = useState(20)
+  const [second,setsecond] = useState(200)
   const[minute,setminute] = useState(0);
   const navigate = useNavigate();
- 
+  const{subjectname,setsubjectname, setquestonindex} = useQuestion()
+  
   
   useEffect(() => {
     const timer = setInterval(() => {
@@ -44,9 +46,15 @@ const ProfileAndSubject = () => {
         {/* subject-choose */}
         <div className='subject-choose w-90 mx-4 my-3 bg-orange-300 flex flex-row text-white text-2xl rounded '>
           <p className=' abosulte left-4 px-3 py-2 my-2 mr-24 ml-8   '>JEE MAIN</p>
-          <p className='bg-blue-500 px-3 py-2 my-2 mr-4 rounded '  >PHYSICS</p>
-          <p className='bg-blue-500 px-3 py-2 my-2 mr-4 rounded '>MATHEMATICS</p>
-          <p className='bg-blue-500 px-3 py-2 my-2 mr-4 rounded '>CHEMISTRY</p>
+          <button className='bg-blue-500 px-3 py-2 my-2 mr-4 rounded ' onClick={()=>{
+            setsubjectname('Physics')
+            setquestonindex(1)
+          }} >PHYSICS</button>
+          <button className='bg-blue-500 px-3 py-2 my-2 mr-4 rounded ' onClick={()=>{setsubjectname('Mathematics');setquestonindex(45)}} >MATHEMATICS</button>
+          <button className='bg-blue-500 px-3 py-2 my-2 mr-4 rounded ' onClick={()=>{
+            setsubjectname('Chemistry');
+            setquestonindex(55)
+          }}>CHEMISTRY</button>
         </div>
     </div>
   )
