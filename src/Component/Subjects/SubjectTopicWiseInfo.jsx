@@ -4,6 +4,7 @@ import { useQuestion } from '../Utility/QuestionContextProvider'
 const SubjectTopicWiseInfo = () => {
   const {selectedtopic} = useQuestion()
   const info = topicinfo.chapters.find(topic => topic.name === `${selectedtopic}`)
+  
   return (
     
     <div className='topic-inf px-12 rounded-md shadow-md'>

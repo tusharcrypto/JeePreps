@@ -4,13 +4,26 @@ const AdminDashBoard = () => {
   const [file, setfile] = useState();
   const [filename, setfilename] = useState();
   const [filechoose, setfilechoosed] = useState(false);
+  const[filedata,setfiledata] = useState();
   function handlefile(event) {
     event.preventDefault();
     setfile(event.target.files[0]);
     // if(file) alert("Plese select file")
     setfilename(event.target.files[0].name);
     setfilechoosed(true);
-    console.log(event.target.files[0]);
+    // const filereader = new FileReader();
+
+    // filereader.onload = function(e){
+    //   setfiledata(e.target.result)  
+    // }
+    // filereader.readAsText(file);
+    // filereader.readAsArrayBuffer(file)
+    // console.log(file)
+    // it will helpful when we send the data to backend
+    // const filedata = new FormData();
+    // filedata.append('file',file);
+    // console.log(event.target.files[0]);
+    // console.log(JSON.stringify(filedata))
   }
   function handlesubmifile() {}
   return (

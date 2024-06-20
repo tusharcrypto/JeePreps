@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-// import questions from '../Assets/Quesstion.js';
+import questions from '../Assets/Quesstion.js';
 import { useState } from 'react';
 import axios from 'axios';
 import { useQuestion } from '../Utility/QuestionContextProvider';
@@ -13,6 +13,7 @@ const SimpleQuestion = () => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [viewsolution,setviewsolution] = useState({})
   const {selectedtopic,setselectedtopic} = useQuestion()
+  const[statusoption,setstatusoption] = useState(null)
 
   useEffect(()=>{
     try {
@@ -43,12 +44,16 @@ const SimpleQuestion = () => {
   const handlesolution =(questionId,ans)=>{
     setviewsolution((prevsolution)=>({...prevsolution,[questionId]:ans}))
   }
+    useEffect(()=>{
+      setSelectedOptions({})
+      setviewsolution({})
+    },[selectedtopic])
 
   return (
     <div className=' w-auto mt-7 mr-32 flex flex-row'>
       <div className="topic-list mr-4 h-screen">
       <QuotesCard/>
-      <SubjectTopicList></SubjectTopicList>
+      <SubjectTopicList ></SubjectTopicList>
       </div>
       <div className="quote-question-section ">
        <div className="quote-topic-info flex flex-row ">
@@ -72,7 +77,7 @@ const SimpleQuestion = () => {
                   name={`question-${question.question_id}`} 
                   value={option}
                   id={`${option}-${question.question_id}`}
-                  
+                  checked={selectedOptions[question.question_id] === option}
                   onChange={() => handleOptionChange(question.question_id, option, question.correct_answer)}
                 />
                 <label

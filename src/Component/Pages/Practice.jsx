@@ -5,6 +5,7 @@ import SimpleQuestion from '../Quize/SimpleQuestion'
 import { useLocation } from 'react-router-dom'
 import SubjectWiseTopic from '../Quize/SubjectWiseTopic'
 import { useAuth } from '../Utility/AuthContexProvider'
+import StartQuizePage from '../../StartQuize/StartQuizePage'
 
 const Practice = () => {
   // const subject = sta  
@@ -42,8 +43,9 @@ const Practice = () => {
     
 
    
-    {updateedinfo.subjectselected? <SubjectWiseTopic subject={updateedinfo.subjectname} ></SubjectWiseTopic>:<Quize/> }
-    
+    {/* {updateedinfo.subjectselected? <SubjectWiseTopic subject={updateedinfo.subjectname} ></SubjectWiseTopic>:<Quize/> } */}
+    {/* <StartQuizePage></StartQuizePage> */}
+    <Quize></Quize>
     {/* <SimpleQuestion/> */}
       
     </div>

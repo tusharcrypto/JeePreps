@@ -1,17 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import topics from '../Assets/EleventhTopicList.js'
 import { useQuestion } from '../Utility/QuestionContextProvider.jsx'
+import { useAuth } from '../Utility/AuthContexProvider.jsx';
 const SubjectTopicList = () => {
     const {subjectname,setsubjectname,classname,setclass,setselectedtopic,selectedtopic} = useQuestion();
     const[textcolor,settextcolor] = useState('blue-500')
     // console.log(topics)
     // console.log(topics.subjectname.chapters)
+    const{setIsLoggedIn}= useAuth();
+    useEffect(()=>{
+      const logininfo = JSON.parse(localStorage.getItem('userinfo'))
+      if(logininfo){
+        setIsLoggedIn(logininfo.isLoggedIn);
+      }else{
+        setIsLoggedIn(false);
+      }
+     
+    },[])
+    
     function handletopiclist(name){
       setselectedtopic(name)
       // settextcolor('green-200')
       // console.log(selectedtopic)
     }
-    
   return (
     <div className=' w-80 mt-2  z-10 mr-5 top-20 ml-6  bg-orange-100 rounded-md '>
       <ul className='mt-8 mx-auto max-w-xs text-left font-medium text-lg leading-none border-blue-200 divide-y divide-blue-200 cursor-pointer ' >
