@@ -5,7 +5,11 @@ import SimpleQuestion from '../Quize/SimpleQuestion'
 import { useLocation } from 'react-router-dom'
 import SubjectWiseTopic from '../Quize/SubjectWiseTopic'
 import { useAuth } from '../Utility/AuthContexProvider'
+<<<<<<< HEAD
 import StartQuizePage from '../../StartQuize/StartQuizePage'
+=======
+import MockQuize from '../Quize/MockQuize'
+>>>>>>> 2e0932609ba75361414d8f156145fddb41e2e698
 
 const Practice = () => {
   // const subject = sta  
@@ -43,10 +47,17 @@ const Practice = () => {
     
 
    
+<<<<<<< HEAD
     {/* {updateedinfo.subjectselected? <SubjectWiseTopic subject={updateedinfo.subjectname} ></SubjectWiseTopic>:<Quize/> } */}
     {/* <StartQuizePage></StartQuizePage> */}
     <Quize></Quize>
-    {/* <SimpleQuestion/> */}
+=======
+    {updateedinfo.subjectselected? <SubjectWiseTopic subject={updateedinfo.subjectname} ></SubjectWiseTopic>:<MockQuize/> }
+    
+>>>>>>> 2e0932609ba75361414d8f156145fddb41e2e698
+    {/* <SimpleQuestion/> */}git add src/Component/Pages/Practice.jsx
+git add src/Component/Quize/SimpleQuestion.jsx
+
       
     </div>
   )

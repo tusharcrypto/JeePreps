@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useQuestion } from '../Utility/QuestionContextProvider'
 
 const QuestionProgessBar = () => {
-  const questionumber =[1,2,3,4,5,6,7,8,9,10]
+  const questionumber =[]
+  for (let i = 1; i <= 85; i++) {
+    questionumber.push(i);
+  }
   const[bgcolor,setbgcolor]=useState({})
   const{
     issaveAndNext,
@@ -67,12 +70,12 @@ const QuestionProgessBar = () => {
         </span>
         </div>
       </div>
-      <div className="lowerbtn bg-red-50 ml-4 my-3 py-2 px-2 w-64 ">
+      <div className="lowerbtn bg-red-50 ml-4 my-3 py-2 px-2 w-auto ">
         {questionumber.map((e,index)=>{
 
             return <button
             key={index}
-            className={` border border-gray-200 px-3 py-2 rounded mr-2 bg-${bgcolor[e]} text-black mb-2`}
+            className={` border border-gray-200 px-3 py-2 rounded mr-1 bg-${bgcolor[e]} text-black mb-2`}
             onClick={() => handleselectedquestion(index + 1,e)}
           >
            {index + 1}

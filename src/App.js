@@ -14,6 +14,9 @@ import Submit from './Component/Quize/Submit';
 import SimpleQuestion from './Component/Quize/SimpleQuestion';
 import AdminDashBoard from './Component/Admin/AdminDashBoard';
 import Profile from './Component/RegisterLogin/Profile';
+import MockQuize from './Component/Quize/MockQuize';
+import MockQuizeStart from './Component/Notes/MockQuizeStart';
+import Quize from './Component/Quize/Quize';
 function App() {
   return (
     <>
@@ -26,7 +29,9 @@ function App() {
 
       <Route path='/practice' element={<Practice/>}></Route>
       <Route path='/about-us' element={<About/>}></Route>
-
+      <Route path='/mock-quize' element={<MockQuize/>}></Route>
+      <Route path='/quize-now' element={<Quize/>}></Route>
+      <Route path='/mock-quize-start' element={<MockQuizeStart/>}></Route>
       </Route>
       <Route path='/submit' element={<Submit/>} ></Route>
       <Route path='/signup/*' element={<Signup/>}/>
@@ -34,6 +39,7 @@ function App() {
       <Route path='/chapterwise-question' element={<SimpleQuestion/>}/>
       <Route path='/admin' element={<AdminDashBoard/>}/>
       <Route path='/profile' element={<Profile/>}/>
+      
     </Routes>
     </BrowserRouter>
     {/* <Footer/> */}
